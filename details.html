@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radhika collection - Premium Product Details</title>
+    
+    <link rel="icon" type="image/png" href="https://img.freepik.com/premium-vector/shopping-logo-vector-icon_636116-200.jpg?semt=ais_hybrid&w=740&q=80"> 
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="details.css">
+    
+    <style>
+        :root { --primary: #f3047c; --dark: #333; --light-bg: #fdf2ff; --green: #1aab2a; }
+        body { font-family: 'Poppins', sans-serif; margin: 0; background: #fff; color: #333; }
+        
+        /* Header */
+        header { display: flex; justify-content: space-between; align-items: center; padding: 15px; background: white; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+
+        /* Gallery */
+        .gallery-section { padding: 10px; background: #fff; }
+        .main-img-box { width: 100%; height: 420px; border-radius: 15px; overflow: hidden; background: #f9f9f9; display: flex; align-items: center; justify-content: center; border: 1px solid #eee; }
+        .main-img-box img { width: 100%; height: 100%; object-fit: contain; }
+        .thumb-row { display: flex; gap: 10px; margin-top: 12px; overflow-x: auto; padding: 5px; scrollbar-width: none; }
+        .thumb-card { min-width: 75px; height: 75px; border-radius: 10px; border: 2px solid #eee; overflow: hidden; cursor: pointer; transition: 0.3s; }
+        .thumb-card.active { border-color: var(--primary); transform: scale(1.05); }
+        .thumb-card img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* Content */
+        .content-box { padding: 20px; }
+        .brand-label { color: var(--primary); font-weight: 800; font-size: 13px; text-transform: uppercase; letter-spacing: 1.5px; }
+        .rating-badge { background: var(--green); color: white; padding: 3px 10px; border-radius: 6px; font-size: 14px; font-weight: 700; display: inline-flex; align-items: center; gap: 5px; }
+
+        /* Price */
+        .price-container { margin: 15px 0; display: flex; align-items: center; gap: 12px; }
+        .current-price { font-size: 26px; font-weight: 800; color: #1a1a1a; }
+        .old-price { font-size: 18px; color: #999; text-decoration: line-through; }
+        .off-tag { background: #e74c3c; color: white; font-size: 14px; font-weight: 700; padding: 4px 10px; border-radius: 6px; }
+
+        /* Feedback/Reviews Section */
+        .feedback-section { margin-top: 25px; border-top: 1px solid #eee; padding-top: 20px; }
+        .review-card { background: #fcfcfc; border: 1px solid #f0f0f0; padding: 15px; border-radius: 12px; margin-bottom: 12px; }
+        .review-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+        .reviewer-name { font-weight: 700; font-size: 14px; }
+        .review-stars { color: #f1c40f; font-size: 11px; }
+        .review-text { font-size: 13px; color: #555; line-height: 1.5; }
+
+        /* Buttons */
+        .bottom-bar { position: fixed; bottom: 0; width: 100%; background: white; display: flex; padding: 12px; gap: 10px; box-shadow: 0 -5px 20px rgba(0,0,0,0.1); box-sizing: border-box; z-index: 1000; }
+        .btn { flex: 1; height: 52px; border: none; border-radius: 10px; font-weight: 800; font-size: 15px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .btn-cart { background: #222; color: white; }
+        .btn-buy { background: var(--primary); color: white; }
+
+        /* Similar Products */
+        .related-section { padding: 20px; border-top: 8px solid #f5f5f5; margin-bottom: 100px; }
+        .related-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
+        .rel-card { background: white; border-radius: 12px; overflow: hidden; border: 1px solid #eee; cursor: pointer; }
+        .rel-card img { width: 100%; height: 180px; object-fit: cover; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <i class="fa-solid fa-arrow-left" onclick="history.back()" style="font-size: 20px;"></i>
+        <h3 style="font-weight: 800; color: var(--primary); margin:0; letter-spacing:1px;">RADHIKA COLLECTION</h3>
+        <div onclick="window.location.href='cart.html'" style="position: relative;">
+            <i class="fa-solid fa-bag-shopping" style="font-size: 24px;"></i>
+            <span id="badge" style="position: absolute; top:-5px; right:-8px; background:var(--primary); color:white; border-radius:50%; width:18px; height:18px; font-size:10px; display:none; align-items:center; justify-content:center;">0</span>
+        </div>
+    </header>
+
+    <div class="gallery-section">
+        <div class="main-img-box" id="mainBox">
+            <img id="mainDisplay" src="" alt="Ghaba Luxury">
+        </div>
+        <div class="thumb-row" id="thumbRow"></div>
+    </div>
+
+    <div class="content-box">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span class="brand-label">Radhika Premium Collection</span>
+            <div class="rating-badge"><span id="avgRating">4.4</span> <i class="fa-solid fa-star"></i></div>
+        </div>
+        
+        <h1 id="pName" style="font-size: 22px; margin: 12px 0 5px 0; font-weight: 600;">Product Name</h1>
+        
+        <div class="price-container">
+            <span class="current-price" id="pPrice">₹0</span>
+            <span class="old-price" id="pOld">₹0</span>
+            <span class="off-tag" id="pOff">40% OFF</span>
+        </div>
+
+        <div id="sizeArea" style="display:none; margin-bottom: 20px;">
+            <p style="font-weight: 700; font-size: 14px; margin-bottom: 10px;">Select Size:</p>
+            <div id="sizeOptions" style="display:flex; gap:10px; flex-wrap:wrap;"></div>
+        </div>
+
+        <div style="background: var(--light-bg); padding: 15px; border-radius: 12px; margin: 20px 0;">
+            <table style="width: 100%; font-size: 13px; border-spacing: 0 8px;">
+                <tr><td style="color:#666;">Brand</td><td style="font-weight:700; text-align:right;">GHABA</td></tr>
+                <tr><td style="color:#666;">Category</td><td style="font-weight:700; text-align:right;" id="pCat">Fashion</td></tr>
+                <tr><td style="color:#666;">Material</td><td style="font-weight:700; text-align:right;" id="pMaterial">High Quality Fabric</td></tr>
+                <tr><td style="color:#666;">Delivery</td><td style="font-weight:700; text-align:right; color:var(--green);">Free Shipping</td></tr>
+            </table>
+        </div>
+
+        <h4>Product Description</h4>
+        <p id="pDesc" style="font-size: 14px; color: #555; line-height: 1.6;">
+            Ghaba ke is premium product ko khaas aapke comfort aur style ke liye banaya gaya hai. 
+        </p>
+
+        <div class="feedback-section">
+            <h4 style="margin-bottom: 15px;">Customer Reviews (<span id="revCount">124</span>)</h4>
+            <div id="feedbackContainer"></div>
+        </div>
+    </div>
+
+    <div class="related-section">
+        <h4 id="relatedTitle" style="margin-bottom: 15px;">More from this Category</h4>
+        <div id="relatedGrid" class="related-grid"></div>
+    </div>
+
+    <div class="bottom-bar">
+        <button class="btn btn-cart" id="addToCartBtn"><i class="fa-solid fa-cart-plus"></i> CART</button>
+        <button class="btn btn-buy" id="buyNowBtn"><i class="fa-solid fa-bolt"></i> BUY NOW</button>
+    </div>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const id = params.get('id');
+        const allProducts = JSON.parse(localStorage.getItem('myProducts')) || [];
+        const product = allProducts.find(x => x.id == id);
+        let selectedSize = "";
+
+        if (product) {
+            document.getElementById('pName').innerText = product.name;
+            document.getElementById('pPrice').innerText = '₹' + product.price;
+            document.getElementById('pCat').innerText = product.category || "General";
+            
+            // Random Pricing Logic
+            const randomOff = [30, 40, 50, 60][Math.floor(Math.random() * 4)];
+            document.getElementById('pOff').innerText = randomOff + "% OFF";
+            document.getElementById('pOld').innerText = '₹' + Math.round(product.price / (1 - randomOff/100));
+            document.getElementById('avgRating').innerText = (Math.random() * (4.9 - 4.2) + 4.2).toFixed(1);
+            document.getElementById('revCount').innerText = Math.floor(Math.random() * 500) + 50;
+
+            // Gallery logic
+            const mainDisplay = document.getElementById('mainDisplay');
+            const thumbRow = document.getElementById('thumbRow');
+            mainDisplay.src = product.mainImg || product.img;
+
+            let photos = [product.mainImg || product.img];
+            if(product.gallery) {
+                const extra = Array.isArray(product.gallery) ? product.gallery : [product.gallery];
+                photos = [...new Set([...photos, ...extra])];
+            }
+
+            photos.forEach((src, i) => {
+                const thumb = document.createElement('div');
+                thumb.className = `thumb-card ${i === 0 ? 'active' : ''}`;
+                thumb.innerHTML = `<img src="${src}">`;
+                thumb.onclick = () => {
+                    mainDisplay.src = src;
+                    document.querySelectorAll('.thumb-card').forEach(t => t.classList.remove('active'));
+                    thumb.classList.add('active');
+                };
+                thumbRow.appendChild(thumb);
+            });
+
+            // Size Logic
+            const cat = product.category?.toLowerCase() || "";
+            if(cat.includes('kurti') || cat.includes('dress') || cat.includes('western') || cat.includes('saree')) {
+                const sizes = cat.includes('saree') ? ["Free Size"] : ["S", "M", "L", "XL", "XXL"];
+                document.getElementById('sizeArea').style.display = 'block';
+                sizes.forEach(sz => {
+                    const btn = document.createElement('button');
+                    btn.innerText = sz;
+                    btn.style.cssText = "border:1px solid #ddd; padding:8px 15px; border-radius:6px; background:white; cursor:pointer; font-weight:600;";
+                    btn.onclick = () => {
+                        document.querySelectorAll('#sizeOptions button').forEach(b => { b.style.background="white"; b.style.color="black"; });
+                        btn.style.background = "#f3047c"; btn.style.color = "white";
+                        selectedSize = sz;
+                    };
+                    document.getElementById('sizeOptions').appendChild(btn);
+                });
+            }
+
+            // Automatic Description
+            if(cat.includes('saree')) {
+                document.getElementById('pMaterial').innerText = "Premium Silk/Georgette";
+                document.getElementById('pDesc').innerText = "Ghaba ki ye saree premium fabric se bani hai jo har occasion par aapko elegant look degi. Isme heavy embroidery aur soft texture ka perfect mel hai.";
+            } else {
+                document.getElementById('pMaterial').innerText = "Pure Premium Cotton";
+                document.getElementById('pDesc').innerText = "Ghaba ka ye stylish design latest fashion trends ko dhyaan me rakhkar banaya gaya hai. Breathable fabric aur perfect stitching ke saath.";
+            }
+
+            // Similar Products - Ab ye poori category ke products dikhayega
+            const similar = allProducts.filter(p => p.category === product.category && p.id != id);
+            document.getElementById('relatedTitle').innerText = `More ${product.category} Collection`;
+            
+            if(similar.length > 0) {
+                similar.forEach(sp => {
+                    const item = document.createElement('div');
+                    item.className = 'rel-card';
+                    item.onclick = () => {
+                        window.location.href = `details.html?id=${sp.id}`;
+                        window.scrollTo(0, 0);
+                    };
+                    item.innerHTML = `
+                        <img src="${sp.mainImg || sp.img}">
+                        <div style="padding:10px;">
+                            <div style="font-size:12px; font-weight:600; color:#333; height:34px; overflow:hidden;">${sp.name}</div>
+                            <div style="color:var(--primary); font-weight:800; margin-top:5px;">₹${sp.price}</div>
+                        </div>`;
+                    document.getElementById('relatedGrid').appendChild(item);
+                });
+            } else {
+                document.querySelector('.related-section').style.display = 'none';
+            }
+
+            // Feedback Logic
+            const names = ["Anjali Sharma", "Priya Verma", "Mehak Gupta", "Sana Khan", "Pooja Devi"];
+            const comments = [
+                "Quality bahut acchi hai, bilkul jaisa photo me tha waisa hi aaya! 😍",
+                "Ghaba products are always the best. Fabric is so soft and comfortable.",
+                "Fast delivery aur packing bhi bahut premium thi. Thank you Ghaba!",
+                "Saree ka design ekdum unique hai. Sabne tareef ki.",
+                "Perfect fitting and beautiful color. Worth every penny!"
+            ];
+
+            for(let i=0; i<3; i++) {
+                const rev = document.createElement('div');
+                rev.className = 'review-card';
+                rev.innerHTML = `
+                    <div class="review-header">
+                        <span class="reviewer-name">${names[Math.floor(Math.random()*names.length)]}</span>
+                        <span class="review-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span>
+                    </div>
+                    <div class="review-text">${comments[Math.floor(Math.random()*comments.length)]}</div>
+                `;
+                document.getElementById('feedbackContainer').appendChild(rev);
+            }
+        }
+
+        // Cart Actions
+        document.getElementById('addToCartBtn').onclick = () => {
+            if (document.getElementById('sizeArea').style.display === "block" && !selectedSize) {
+                alert("Please select a size first! 📏"); return;
+            }
+            let cart = JSON.parse(localStorage.getItem('myCart')) || [];
+            cart.push({...product, size: selectedSize});
+            localStorage.setItem('myCart', JSON.stringify(cart));
+            window.location.href = 'cart.html';
+        };
+
+        document.getElementById('buyNowBtn').onclick = () => {
+            if (document.getElementById('sizeArea').style.display === "block" && !selectedSize) {
+                alert("Please select a size first! 📏"); return;
+            }
+            localStorage.setItem('buyNowItem', JSON.stringify({...product, size: selectedSize}));
+            window.location.href = 'address.html';
+        };
+
+        function updateBadge() {
+            const cart = JSON.parse(localStorage.getItem('myCart')) || [];
+            if(cart.length > 0) { 
+                document.getElementById('badge').innerText = cart.length; 
+                document.getElementById('badge').style.display = 'flex'; 
+            }
+        }
+        window.onload = updateBadge;
+    </script>
+
+    <a href="https://wa.me/917240232365?text=Hello Ghaba, I am interested in ${product?.name} (ID: ${id})" 
+        style="position:fixed; bottom:85px; right:20px; background:#25d366; color:white; width:55px; height:55px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:28px; box-shadow:0 4px 10px rgba(0,0,0,0.3); z-index:1000; text-decoration:none;">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+</body>
+</html>
