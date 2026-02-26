@@ -379,47 +379,51 @@ h1, h2, h3, .logo {
     padding-left: 25px;
 }
 
-/* --- WhatsApp --- */
+/* --- WhatsApp - FIXED (SCREEN KE ANDAR RAHEGA) --- */
 .wa-container {
     position: fixed;
-    bottom: 30px;
-    right: 20px;
-    z-index: 1000;
+    bottom: 20px; /* मोबाइल पर थोड़ा ऊपर */
+    right: 15px;  /* स्क्रीन के किनारे से सुरक्षित दूरी */
+    z-index: 2000;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
+    max-width: 80%; /* स्क्रीन से बाहर न जाए इसलिए लिमिट */
 }
 
 .wa-msg-pop {
     background: var(--white);
-    padding: 8px 18px;
-    border-radius: 20px;
-    font-size: 13px;
-    font-weight: 500;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    margin-bottom: 12px;
-    border: 1px solid var(--gold);
+    padding: 6px 14px;
+    border-radius: 15px 15px 2px 15px; /* प्रीमियम चैट लुक */
+    font-size: 12px;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    margin-bottom: 8px;
+    border: 1.5px solid var(--gold);
+    white-space: normal; /* टेक्स्ट लंबा हो तो नीचे चला जाए, बाहर न जाए */
+    text-align: right;
     animation: bounce 2s infinite;
+    color: var(--black);
 }
 
 @keyframes bounce {
     0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
-    40% {transform: translateY(-5px);}
+    40% {transform: translateY(-6px);}
     60% {transform: translateY(-3px);}
 }
 
 .whatsapp-modern {
     background: #25d366;
     color: white;
-    width: 60px;
-    height: 60px;
+    width: 55px;  /* थोड़ा छोटा ताकि स्क्रीन न घेरे */
+    height: 55px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 32px;
+    font-size: 30px;
     text-decoration: none;
-    box-shadow: 0 10px 20px rgba(37,211,102,0.3);
+    box-shadow: 0 8px 20px rgba(37,211,102,0.35);
     transition: var(--transition);
 }
 
@@ -458,4 +462,9 @@ h1, h2, h3, .logo {
     .category-container { gap: 15px; }
     .cat-card { width: 100px; }
     .cat-card p { font-size: 11px; }
+    
+    /* मोबाइल पर WhatsApp को और सुरक्षित बनाना */
+    .wa-container { bottom: 15px; right: 10px; }
+    .wa-msg-pop { font-size: 11px; padding: 5px 10px; max-width: 180px; }
+    .whatsapp-modern { width: 50px; height: 50px; font-size: 26px; }
 }
