@@ -42,7 +42,6 @@
         .rel-card { background: white; border-radius: 12px; overflow: hidden; border: 1px solid #eee; cursor: pointer; }
         .rel-card img { width: 100%; height: 180px; object-fit: cover; }
         
-        /* Loading overlay for shared links */
         #loader { position: fixed; top:0; left:0; width:100%; height:100%; background:white; z-index:9999; display:flex; align-items:center; justify-content:center; flex-direction:column; }
         .spinner { width:40px; height:40px; border:4px solid #f3f3f3; border-top:4px solid var(--primary); border-radius:50%; animation:spin 1s linear infinite; }
         @keyframes spin { 0% { transform:rotate(0deg); } 100% { transform:rotate(360deg); } }
@@ -115,18 +114,14 @@
         let selectedSize = "";
 
         async function init() {
-            // 1. Try Local Storage first
             const localProducts = JSON.parse(localStorage.getItem('myProducts')) || [];
             currentProduct = localProducts.find(x => x.id == productId);
 
-            // 2. If not in local storage (shared link), fetch from Cloud
             if (!currentProduct) {
                 try {
                     const response = await fetch(SCRIPT_URL);
                     const data = await response.json();
                     currentProduct = data.products.find(p => p.id == productId);
-                    
-                    // Save all products locally for 'Similar Products' to work
                     localStorage.setItem('myProducts', JSON.stringify(data.products));
                 } catch (e) {
                     console.error("Fetch Error", e);
@@ -136,6 +131,12 @@
             if (currentProduct) {
                 renderProduct(currentProduct);
                 document.getElementById('loader').style.display = 'none';
+                
+                // WhatsApp लिंक को डायनामिक बनाना
+                const waBtn = document.getElementById('waFloatingBtn');
+                const message = encodeURIComponent(`नमस्ते Radhika Collection! मुझे इस प्रोडक्ट में रुचि है:\nनाम: ${currentProduct.name}\nID: ${currentProduct.id}\nकीमत: ₹${currentProduct.price}`);
+                waBtn.href = `https://wa.me/918233143672?text=${message}`;
+                
             } else {
                 alert("Product not found!");
                 window.location.href = "index.html";
@@ -147,13 +148,11 @@
             document.getElementById('pPrice').innerText = '₹' + product.price;
             document.getElementById('pCat').innerText = product.category || "General";
             
-            // Random Pricing UI
             const off = [30, 40, 50][Math.floor(Math.random()*3)];
             document.getElementById('pOff').innerText = off + "% OFF";
             document.getElementById('pOld').innerText = '₹' + Math.round(product.price / (1 - off/100));
             document.getElementById('avgRating').innerText = (Math.random() * (4.9 - 4.2) + 4.2).toFixed(1);
 
-            // Gallery
             const mainImg = product.mainImg || product.img;
             document.getElementById('mainDisplay').src = mainImg;
             let photos = [mainImg];
@@ -173,7 +172,6 @@
                 document.getElementById('thumbRow').appendChild(thumb);
             });
 
-            // Size Logic
             const cat = (product.category || "").toLowerCase();
             if(cat.includes('kurti') || cat.includes('dress') || cat.includes('western') || cat.includes('saree')) {
                 const sizes = cat.includes('saree') ? ["Free Size"] : ["S", "M", "L", "XL", "XXL"];
@@ -191,12 +189,10 @@
                 });
             }
 
-            // Description
             document.getElementById('pDesc').innerText = cat.includes('saree') ? 
                 "Premium collection fabric designed to give you an elegant look for every occasion." : 
                 "Stylish design crafted keeping latest trends in mind with breathable fabric.";
 
-            // Similar Products
             const allLocal = JSON.parse(localStorage.getItem('myProducts')) || [];
             const similar = allLocal.filter(p => p.category === product.category && p.id != product.id);
             similar.forEach(sp => {
@@ -207,7 +203,6 @@
                 document.getElementById('relatedGrid').appendChild(item);
             });
 
-            // Reviews
             const names = ["Anjali S.", "Priya V.", "Mehak G."];
             for(let i=0; i<3; i++) {
                 const rev = document.createElement('div');
@@ -217,7 +212,6 @@
             }
         }
 
-        // Action Buttons
         document.getElementById('addToCartBtn').onclick = () => {
             if (document.getElementById('sizeArea').style.display === "block" && !selectedSize) { alert("Please select a size! 📏"); return; }
             let cart = JSON.parse(localStorage.getItem('myCart')) || [];
@@ -237,7 +231,7 @@
         if(badge.length > 0) { document.getElementById('badge').innerText = badge.length; document.getElementById('badge').style.display = 'flex'; }
     </script>
 
-    <a href="https://wa.me/918233143672?text=I am interested in product ID: ${productId}" 
+    <a id="waFloatingBtn" href="https://wa.me/918233143672" 
        style="position:fixed; bottom:85px; right:20px; background:#25d366; color:white; width:55px; height:55px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:28px; box-shadow:0 4px 10px rgba(0,0,0,0.3); z-index:1000; text-decoration:none;">
         <i class="fa-brands fa-whatsapp"></i>
     </a>
