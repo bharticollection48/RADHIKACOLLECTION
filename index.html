@@ -178,7 +178,7 @@
 
     <div class="wa-container">
         <div class="wa-msg-pop">Chat with Radhika collection!</div>
-        <a href="https://wa.me/917240232365?text=I'm interested in your premium collection." 
+        <a href="https://wa.me/918233143672?text=I'm interested in your premium collection." 
            class="whatsapp-modern" target="_blank">
             <i class="fa-brands fa-whatsapp"></i>
         </a>
@@ -193,10 +193,8 @@
                 const response = await fetch(SCRIPT_URL + "?t=" + new Date().getTime());
                 const result = await response.json();
                 if (result.products) {
-                    // New products ko upar dikhane ke liye reverse kiya
                     allProducts = result.products.reverse();
                     localStorage.setItem('myProducts', JSON.stringify(allProducts)); 
-                    
                     filterProducts('HOME');
                 }
             } catch (e) {
@@ -307,7 +305,7 @@
         }
 
         function openProduct(id) { window.location.href = `details.html?id=${id}`; }
-        window.onclick = () => { document.getElementById('menuDropdown').classList.remove('show'); };
+        window.onclick = () => { document.getElementById('menuDropdown').classList.remove('remove'); };
         window.onload = loadStoreData;
     </script>
 </body>
