@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Radika collection - Premium Ethnic Boutique</title>
+    <title>Radhika Collection - Premium Ethnic Boutique</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="https://img.freepik.com/premium-vector/shopping-logo-vector-icon_636116-200.jpg?semt=ais_hybrid&w=740&q=80"> 
@@ -15,7 +15,7 @@
         .category-container {
             display: flex;
             justify-content: center;
-            gap: 40px; 
+            gap: 20px; 
             padding: 25px 10px;
             overflow-x: auto;
             scrollbar-width: none;
@@ -25,18 +25,18 @@
             flex-direction: column;
             align-items: center;
             cursor: pointer;
-            min-width: 100px; 
+            min-width: 90px; 
             transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         .cat-card:active { transform: scale(0.9); }
         
         .cat-img-box {
-            width: 90px; 
-            height: 90px; 
+            width: 80px; 
+            height: 80px; 
             border-radius: 50%;
             border: 3px solid #fce4ec;
             padding: 5px;
-            margin-bottom: 12px;
+            margin-bottom: 8px;
             background: #fff;
             display: flex;
             align-items: center;
@@ -51,18 +51,17 @@
             object-fit: cover;
         }
         .cat-card p {
-            font-size: 15px; 
+            font-size: 13px; 
             font-weight: 600;
             color: #444;
             margin: 0;
             letter-spacing: 0.5px;
             text-transform: uppercase;
         }
-        /* Active state */
         .active-cat .cat-img-box { 
             border-color: #d4af37; 
             box-shadow: 0 0 20px rgba(212,175,55,0.5);
-            transform: translateY(-8px);
+            transform: translateY(-5px);
         }
         .active-cat p { color: #d4af37; }
 
@@ -95,6 +94,69 @@
         .p-price { font-size: 17px; font-weight: 700; color: #1a1a1a; }
         .p-old-price { font-size: 13px; color: #999; text-decoration: line-through; }
         .p-discount-txt { color: #e74c3c; font-size: 12px; font-weight: 700; }
+
+        /* --- WHATSAPP FIXED POSITIONING --- */
+        .wa-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            pointer-events: none; /* Allows clicking through the empty container space */
+        }
+        .wa-msg-pop {
+            background: white;
+            color: #333;
+            padding: 8px 15px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 10px;
+            border: 1px solid #eee;
+            position: relative;
+            animation: bounceIn 1s ease;
+            white-space: nowrap;
+            pointer-events: auto;
+        }
+        /* Little tail for the message bubble */
+        .wa-msg-pop::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            right: 20px;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 8px solid white;
+        }
+        .whatsapp-modern {
+            background: #25d366;
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 30px;
+            text-decoration: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            pointer-events: auto;
+            transition: transform 0.3s ease;
+        }
+        .whatsapp-modern:hover { transform: scale(1.1); }
+
+        @keyframes bounceIn {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 480px) {
+            .wa-msg-pop { font-size: 12px; padding: 6px 12px; }
+            .whatsapp-modern { width: 50px; height: 50px; font-size: 26px; }
+        }
     </style>
 </head>
 <body>
@@ -177,7 +239,7 @@
     </section>
 
     <div class="wa-container">
-        <div class="wa-msg-pop">Chat with Radhika collection!</div>
+        <div class="wa-msg-pop">Chat with Radhika Collection!</div>
         <a href="https://wa.me/918233143672?text=I'm interested in your premium collection." 
            class="whatsapp-modern" target="_blank">
             <i class="fa-brands fa-whatsapp"></i>
@@ -305,7 +367,7 @@
         }
 
         function openProduct(id) { window.location.href = `details.html?id=${id}`; }
-        window.onclick = () => { document.getElementById('menuDropdown').classList.remove('remove'); };
+        window.onclick = () => { document.getElementById('menuDropdown').classList.remove('show'); };
         window.onload = loadStoreData;
     </script>
 </body>
